@@ -188,10 +188,11 @@ With the "High Impedance" strategy ($Offset=4mm, R=120\Omega$), the "W-shape" os
 * **Low Freq Start**: Sharp dip starting at 0.5 GHz.
 * **Smoothness**: No significant resonance humps in the transition region (0.7-1.0 GHz).
 
-*(Insert Image: Final S11 curve showing a smooth "bathtub" shape from 0.5 to 2.5 GHz)*
+![Final S11 for V4](../images/V4.0_Final_S11.png)
 
 ## 5. Conclusion
 The V4 AED design successfully solves the manufacturing and bandwidth issues of V3. The key to taming the AED structure was understanding the **impedance mismatch in the mode transition region** and solving it with a **large offset (4mm) and high resistive loading (120Ω)**.
+
 
 
 
