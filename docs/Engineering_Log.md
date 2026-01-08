@@ -155,7 +155,7 @@ Initial simulations with standard parameters ($R_{Long}=110$, $R_{Short}=90$, $1
 * **Problem**: Initially set `Offset = -1.5mm`, causing the arms to overlap and form a capacitor. This killed the low-frequency response.
 * **Fix**: Changed `Offset` to positive (**1.5mm**).
 * **Result**: The antenna started to resonate, showing a dip at 0.65 GHz.
-![Result for V4](../images/V4.0_Step A.PNG)
+![Result for V4](../images/V4.0_StepA.PNG)
 
 ### Step B: The "Skinny vs. Fat" Dilemma
 * **Action**: We stretched the antenna ($R_{Long} \to 135mm$) to lower the frequency but kept it skinny ($R_{Short}=85mm$).
@@ -177,7 +177,7 @@ Despite previous steps, a stubborn "hump" remained at 0.7-1.0 GHz.
     * **Offset**: **4.0mm** (A large gap to increase input impedance).
     * **Neck Width**: **2.5mm** (Slightly narrower to match the high impedance throat).
     * **Length**: **175mm** (To push the lowest resonance down to 0.5 GHz).
-![Result for V4](../images/V4.0_Step D.PNG)
+![Result for V4](../images/V4.0_StepD.PNG)
 
 ## 4. Final V4 Performance
 With the "High Impedance" strategy ($Offset=4mm, R=120\Omega$), the "W-shape" oscillation was successfully flattened.
@@ -190,4 +190,5 @@ With the "High Impedance" strategy ($Offset=4mm, R=120\Omega$), the "W-shape" os
 
 ## 5. Conclusion
 The V4 AED design successfully solves the manufacturing and bandwidth issues of V3. The key to taming the AED structure was understanding the **impedance mismatch in the mode transition region** and solving it with a **large offset (4mm) and high resistive loading (120Ω)**.
+
 
