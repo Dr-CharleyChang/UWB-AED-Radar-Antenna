@@ -129,3 +129,62 @@ Optimized through parametric sweeps and physical analysis:
 * **PCB**: FR-4 (1.6 mm), 2 layers.
 * **SMA**: Right-angle SMA (e.g., C15673). **Note**: Ground pins on the bottom arm; signal pin bridges to the top arm. A cutout on the bottom arm is required to prevent the signal pin from shorting to ground.
 * **Resistor**: 0805 package, 12 Ω, soldered in parallel at the feed gap.
+
+# ------------------------------------------------------------------
+# V4 Design Log: The Evolution to Antipodal (2026-01-08)
+
+## 1. Motivation for V4
+The previous V3 design (Coplanar Teardrop) relied on a discrete Balun chip. While functional, it presented two major issues:
+1.  **Assembly Difficulty**: The Balun footprint was small and hard to solder manually.
+2.  **Bandwidth Limit**: The bandwidth was limited to 0.9-1.8 GHz, insufficient for higher resolution imaging.
+
+**Decision**: Switch to **Antipodal Elliptical Dipole (AED)** topology.
+* **Advantage**: Self-balun effect (Microstrip -> Parallel Strips -> Slotline).
+* **Benefit**: Wider bandwidth potential and simplified SMA connection.
+
+## 2. Initial Tuning & The "W-Shape" Problem
+Initial simulations with standard parameters ($R_{Long}=110$, $R_{Short}=90$, $12\Omega$ Resistor) showed a disastrous response.
+* **Issue**: Strong mismatch in the 0.7 - 1.0 GHz region.
+* **Diagnosis**: The antenna suffers from **Mode Transition Oscillation**. It struggles to switch from "Dipole Mode" (low freq) to "Traveling Wave Mode" (high freq), causing energy to reflect back and forth.
+
+*(Insert Image: S11 plot showing the initial "W" shape oscillation)*
+
+## 3. Step-by-Step Optimization Process
+
+### Step A: Fixing the "Negative Offset" Error
+* **Problem**: Initially set `Offset = -1.5mm`, causing the arms to overlap and form a capacitor. This killed the low-frequency response.
+* **Fix**: Changed `Offset` to positive (**1.5mm**).
+* **Result**: The antenna started to resonate, showing a dip at 0.65 GHz.
+
+### Step B: The "Skinny vs. Fat" Dilemma
+* **Action**: We stretched the antenna ($R_{Long} \to 135mm$) to lower the frequency but kept it skinny ($R_{Short}=85mm$).
+* **Observation**: The S11 curve became oscillating (High-Q). The "Dipole Mode" and "Traveling Wave Mode" were decoupled, creating a hump at 0.8 GHz.
+* **Solution**: **"Fatten" the antenna**. Increased $R_{Short}$ to **100mm**.
+* **Physics**: A rounder shape facilitates a smoother impedance transition, connecting the two modes.
+
+### Step C: Deep Cavity for Low Freq
+* **Action**: To further absorb the back radiation which was causing standing waves at 0.7 GHz.
+* **Parameter**: Increased Cavity Depth ($H_{Cav}$) from 40mm to **60mm** and Absorber ($H_{Loss}$) to **55mm**.
+* **Result**: The S11 "floor" dropped significantly, especially above 1.2 GHz.
+
+### Step D: The "High Impedance" Breakthrough (Final Polish)
+Despite previous steps, a stubborn "hump" remained at 0.7-1.0 GHz.
+* **Hypothesis**: The input impedance in the transition region is much higher than the standard 50Ω or the previously used 70Ω load.
+* **Counter-Intuitive Move**: Instead of lowering resistance, we **increased** it.
+* **Final Configuration**:
+    * **Resistance**: **120Ω** (To dampen the high-Q resonance).
+    * **Offset**: **4.0mm** (A large gap to increase input impedance).
+    * **Neck Width**: **2.5mm** (Slightly narrower to match the high impedance throat).
+    * **Length**: **175mm** (To push the lowest resonance down to 0.5 GHz).
+
+## 4. Final V4 Performance
+With the "High Impedance" strategy ($Offset=4mm, R=120\Omega$), the "W-shape" oscillation was successfully flattened.
+
+* **Bandwidth**: **0.5 GHz - 2.5 GHz** (S11 < -10 dB).
+* **Low Freq Start**: Sharp dip starting at 0.5 GHz.
+* **Smoothness**: No significant resonance humps in the transition region (0.7-1.0 GHz).
+
+*(Insert Image: Final S11 curve showing a smooth "bathtub" shape from 0.5 to 2.5 GHz)*
+
+## 5. Conclusion
+The V4 AED design successfully solves the manufacturing and bandwidth issues of V3. The key to taming the AED structure was understanding the **impedance mismatch in the mode transition region** and solving it with a **large offset (4mm) and high resistive loading (120Ω)**.
