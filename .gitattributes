@@ -1,0 +1,2 @@
+*.aedt filter=lfs diff=lfs merge=lfs -text
+*.aedtz filter=lfs diff=lfs merge=lfs -text
