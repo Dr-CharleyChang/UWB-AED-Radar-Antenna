@@ -35,7 +35,7 @@ To overcome the bandwidth limitations and assembly complexity of the previous co
 ### 📂 Repository Structure
 * `models/`: Ansys HFSS simulation files (`.aedt`).
 * `docs/`: **[Engineering Log](docs/Engineering_Log.md)** (Full design history from V1 failure to V4 success).
-* `hardware/`: Gerber files for PCB manufacturing.
+* `hardware/`: Gerber files for PCB manufacturing.(temporarily unavailable)
 
 ---
 
@@ -63,7 +63,7 @@ To overcome the bandwidth limitations and assembly complexity of the previous co
 ### 📂 目录说明
 * `models/`: HFSS 仿真源文件 (`.aedt`) 及结构图。
 * `docs/`: **[工程设计日志](docs/Engineering_Log.md)** (包含从 V1 到 V4 的完整调试记录、参数扫描分析及 S11 对比图)。
-* `hardware/`: PCB 打样制造文件 (Gerber)。
+* `hardware/`: PCB 打样制造文件 (Gerber)。(暂时不可用)
 
 ---
 **Maintainer**: Dr. Charley Chang
